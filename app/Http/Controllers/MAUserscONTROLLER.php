@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MAUsers;
 use Illuminate\Http\Request;
 
-class MAUserscONTROLLER extends Controller
+class MAUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,11 @@ class MAUserscONTROLLER extends Controller
      */
     public function index()
     {
-        //
+        $users = MAUsers::all();
+//        formating data to rsponse angular
+        $response = ['users' => $users];
+
+        return response()->json($response, 200);
     }
 
     /**
@@ -56,7 +61,7 @@ class MAUserscONTROLLER extends Controller
      */
     public function edit($id)
     {
-        //
+        //front-end only
     }
 
     /**
