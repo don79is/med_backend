@@ -28,7 +28,7 @@ class MAUsersController extends Controller
      */
     public function create()
     {
-        //
+        //front-end only
     }
 
     /**
