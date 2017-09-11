@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\MAUsers;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MAUsersController extends Controller
 {
@@ -14,9 +16,14 @@ class MAUsersController extends Controller
      */
     public function index()
     {
+        $user = JWTAuth::parseToken()->toUser();
+
         $users = MAUsers::all();
 //        formating data to rsponse angular
-        $response = ['users' => $users];
+        $response = [
+            'users' => $users,
+            'user' => $user
+        ];
 
         return response()->json($response, 200);
     }
@@ -85,5 +92,22 @@ class MAUsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function signIn(Request $request){
+
+        $this->validate($request, [
+            'email' => 'required|email',
+           'password' => 'required'
+        ]);
+        $credentials = $request->only('email','password');
+        try{
+            if(!$token = JWTAuth::attempt($credentials)){
+                return response()->json(['error' => 'Invalid credentials'],401);
+            }
+        }catch (JWTException $e){
+            return response()->json(['error' => 'Could not create token'], 500);
+        }
+        return response()->json(['token' => $token],200);
     }
 }
