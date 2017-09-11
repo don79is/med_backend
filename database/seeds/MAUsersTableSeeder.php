@@ -14,7 +14,7 @@ class MAUsersTableSeeder extends Seeder
         $data = array(
             array
             ('id' => 1,
-                'email' => 'doni@doni',
+                'email' => 'doni@doni.lt',
                 'first_name' => 'Donatas',
                 'last_name' => 'Tumanas',
                 'role_id' => 1,
