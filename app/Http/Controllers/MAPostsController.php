@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MAPosts;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class MAPostsController extends Controller
 {
@@ -41,9 +42,10 @@ class MAPostsController extends Controller
     public function store(Request $request)
     {
         $post = new MAPosts();
+        $user = JWTAuth::parseToken()->toUser();
 
         $post->id = Uuid::uuid4();
-        $post->user_id = $request->user_id;
+        $post->user_id = $user->id;
         $post->title = $request->title;
         $post->text = $request->text;
         if ($post->save()) {
