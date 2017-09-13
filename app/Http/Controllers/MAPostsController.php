@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MAPosts;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 class MAPostsController extends Controller
 {
@@ -39,7 +40,18 @@ class MAPostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new MAPosts();
+
+        $post->id = Uuid::uuid4();
+        $post->user_id = $request->user_id;
+        $post->title = $request->title;
+        $post->text = $request->text;
+        if ($post->save()) {
+            return response()->json(['post' => $post], 201);
+        } else {
+            return response()->json(['error' => 'New post not saved '], 400);
+
+        }
     }
 
     /**
@@ -50,7 +62,14 @@ class MAPostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = MAPosts::find($id);
+
+        if($post){
+            return response()->json(['post' => $post], 200);
+
+        }else{
+            return response()->json(['error' =>'Post not found'],400);
+        }
     }
 
     /**
@@ -73,7 +92,15 @@ class MAPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = MAPosts::find($id);
+
+        $post->title = $request->title;
+        $post->text = $request->text;
+
+        if($post->save()){
+            return response()->json(['post' => $post], 200);
+        }
+        return response()->json(['error' => 'Post not updated'], 400);
     }
 
     /**
@@ -84,6 +111,11 @@ class MAPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        //post
+        $post =  MAPosts::where('id', $id)->delete();
+
+
+        return response()->json(['success' => $post], 200);
     }
 }
