@@ -12,6 +12,8 @@ class MAUsers extends Authenticatable
 
     protected $table = 'ma_users';
     use Notifiable;
+
+    public $incrementing = false;
     protected $fillable = ['id', 'role_id', 'avatar_id', 'first_name', 'last_name', 'position', 'email', 'password', 'show_in_front'];
 
     protected $hidden = [
