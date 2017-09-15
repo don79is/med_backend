@@ -21,4 +21,5 @@ Route::post('/users/signin', 'MAUsersController@signIn');
 route::group(['middleware' => 'auth.jwt'], function () {
     Route::resource('/users', 'MAUsersController');
     Route::resource('/posts', 'MAPostsController');
+    Route::resource('/roles', 'MARolesController');
 });
