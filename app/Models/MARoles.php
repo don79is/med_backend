@@ -6,11 +6,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class MARoles extends Authenticatable
+class MARoles extends CoreModel
 {
     protected $table = 'ma_roles';
     use Notifiable;
 
-    public $incrementing = false;
+
     protected $fillable = ['id','name'];
+
+
 }

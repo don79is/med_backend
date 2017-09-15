@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MARoles;
 use App\Models\MAUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +25,9 @@ class MAUsersController extends Controller
 //        formating data to rsponse angular
         $response = [
             'users' => $users,
-            'user' => $user
+            'user' => $user,
+
+
         ];
 
         return response()->json($response, 200);
@@ -75,12 +78,16 @@ class MAUsersController extends Controller
     public function show($id)
     {
         $user = MAUsers::find($id);
+        $roles = MARoles::all();
+        if ($user) {
+            return response()->json([
+                'user' => $user,
+                'roles' => $roles,
 
-        if($user){
-            return response()->json(['user' => $user], 200);
+            ], 200);
 
-        }else{
-            return response()->json(['error' =>'User not found'],400);
+        } else {
+            return response()->json(['error' => 'User not found'], 400);
         }
     }
 
@@ -112,7 +119,7 @@ class MAUsersController extends Controller
         $user->position = $request->position;
         $user->role_id = $request->role_id;
 
-        if($user->save()){
+        if ($user->save()) {
             return response()->json(['user' => $user], 200);
         }
         return response()->json(['error' => 'User not updated'], 400);
@@ -127,7 +134,7 @@ class MAUsersController extends Controller
     public function destroy($id)
     {
         //user
-       $user =  MAUsers::where('id', $id)->delete();
+        $user = MAUsers::where('id', $id)->delete();
 
 
         return response()->json(['success' => $user], 200);

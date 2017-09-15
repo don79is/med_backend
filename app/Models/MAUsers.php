@@ -19,4 +19,12 @@ class MAUsers extends Authenticatable
     protected $hidden = [
         'password','remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(MARoles::class, 'ma_users_roles_connections', 'user_id', 'role_id' );
+    }
+
+
+    protected $with = ['roles'];
 }
