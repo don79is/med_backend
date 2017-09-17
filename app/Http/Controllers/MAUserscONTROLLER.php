@@ -78,7 +78,7 @@ class MAUsersController extends Controller
     public function show($id)
     {
         $user = MAUsers::find($id);
-        $roles = MARoles::all();
+        $roles = MARoles::pluck('name', 'id');
         if ($user) {
             return response()->json([
                 'user' => $user,
