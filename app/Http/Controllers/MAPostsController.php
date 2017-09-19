@@ -23,6 +23,25 @@ class MAPostsController extends Controller
         return response()->json($response, 200);
     }
 
+    public function allPosts()
+    {
+        $posts = MAPosts::all();
+
+        return response()->json($posts, 200);
+    }
+
+    public function showPost($id)
+    {
+        $post = MAPosts::find($id);
+
+        if($post){
+            return response()->json(['post' => $post], 200);
+
+        }else{
+            return response()->json(['error' =>'Post not found'],400);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
