@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MAUsersRolesConnections extends CoreModel
+class MAUsersRolesConnections extends Model
 {
 
     protected $updated_at = false;
