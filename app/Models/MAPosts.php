@@ -14,4 +14,9 @@ class MAPosts extends CoreModel
 
 
     protected $fillable = ['id','user_id','title','text'];
+
+    public function userName(){
+        return $this->hasOne(MAUsers::class, 'id', 'user_id');
+    }
+    protected $with = ['userName'];
 }

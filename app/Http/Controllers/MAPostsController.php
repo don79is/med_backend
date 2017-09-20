@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MAPosts;
+use App\Models\MAUsers;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -17,8 +18,10 @@ class MAPostsController extends Controller
     public function index()
     {
         $posts = MAPosts::all();
+        $user = MAUsers::all();
 //        formating data to rsponse angular
-        $response = ['posts' => $posts];
+        $response = ['posts' => $posts,
+        'userName' => $user];
 
         return response()->json($response, 200);
     }
@@ -27,7 +30,7 @@ class MAPostsController extends Controller
     {
         $posts = MAPosts::all();
 
-        return response()->json($posts, 200);
+        return response()->json(['posts' => $posts], 200);
     }
 
     public function showPost($id)

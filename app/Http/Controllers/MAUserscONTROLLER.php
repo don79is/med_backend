@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use JWTAuth;
 
 class MAUsersController extends Controller
 {
@@ -182,5 +182,14 @@ class MAUsersController extends Controller
             return response()->json(['error' => 'Could not create token'], 500);
         }
         return response()->json(['token' => $token], 200);
+    }
+
+    public function isLoggedIn() {
+        $user = JWTAuth::parsetoken()->toUser();
+        if($user) {
+           return response()->json(['user' =>$user], 200);
+        }else {
+            return response()->json(['error' =>'Authenticate failed'], 400);
+        }
     }
 }
